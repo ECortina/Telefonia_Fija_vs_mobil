@@ -8,14 +8,12 @@ Esta información del TT proviene de [OurWorldInData.org](https://ourworldindata
 
 > Hannah Ritchie (2017) - "Technology Adoption". Publicado online en OurWorldInData.org. Obtenido de: 'https://ourworldindata.org/technology-adoption' [Online Resource]
 
-Pew research also has a [nice article](https://www.pewresearch.org/global/2019/02/05/smartphone-ownership-is-growing-rapidly-around-the-world-but-not-always-equally/) about the adoption of mobile phones by country.
+[Articulo relacionado](https://www.pewresearch.org/global/2019/02/05/smartphone-ownership-is-growing-rapidly-around-the-world-but-not-always-equally/)
 
-### Get the data here
+### La data se puede encontrar acá
 
 ```{r}
-# Get the Data
-
-# Read in with tidytuesdayR package 
+# se puede leer con el paquete de tidytuesdayR  
 # Install from CRAN via: install.packages("tidytuesdayR")
 # This loads the readme and all the datasets for the week of interest
 
@@ -26,7 +24,7 @@ tuesdata <- tidytuesdayR::tt_load(2020, week = 46)
 
 mobile <- tuesdata$mobile
 
-# Or read in the data manually
+# O se puede cargar manualmente
 
 mobile <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-11-10/mobile.csv')
 landline <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-11-10/landline.csv')
