@@ -1,4 +1,4 @@
-# Telefonia fija vs mobil
+# Telefonía fija vs movil
 
 ![](https://images.unsplash.com/photo-1525598912003-663126343e1f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80)
 
