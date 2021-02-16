@@ -1,7 +1,7 @@
 Uso Histórico de los teléfonos moviles vs tradicionales
 ================
 
-## Análisis del uso de los teléfonos, cable y liena, a lo largo del tiempo.
+## Análisis del uso de los teléfonos cable y mobil, a lo largo del tiempo.
 
 Fuente: Hannah Ritchie (2017) - “Technology Adoption”. Publicado online
 en OurWorldInData.org. Obtenido de:
@@ -16,9 +16,9 @@ library(tidyverse)
     ## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
 
     ## v ggplot2 3.3.3     v purrr   0.3.4
-    ## v tibble  3.0.4     v dplyr   1.0.2
+    ## v tibble  3.0.4     v dplyr   1.0.4
     ## v tidyr   1.1.2     v stringr 1.4.0
-    ## v readr   1.4.0     v forcats 0.5.0
+    ## v readr   1.4.0     v forcats 0.5.1
 
     ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
     ## x dplyr::filter() masks stats::filter()
@@ -43,10 +43,9 @@ library(scales)
 theme_set(theme_light())
 ```
 
+##### Cargamos la data directamente desde el link en formato “.csv”
+
 ``` r
-# Cargamos la data directamente desde el link en formato ".csv"
-
-
 mobile <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-11-10/mobile.csv')
 ```
 
@@ -93,12 +92,11 @@ phones <- bind_rows(mobile,landline) %>%
     rename(pais = entity)
 ```
 
-creamos un filtro para analizar por país, en este caso cual es el uso de
-la telefonia de linea vs la telefonia movil
+#### Creamos un filtro para analizar por país resaltando Colombia.
+
+##### Organizamos la información empezamos por el país, año y las suscripciones.
 
 ``` r
-#Organizamos la información empezamos por el país, año y las suscripciones.
-
 phones%>%
     filter(pais == "Colombia") %>%
     ggplot(aes(year,suscripciones,color = type)) +
@@ -111,7 +109,7 @@ phones%>%
 ![](HistoricalPhones_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 ``` r
-# Primer insigth: en donde encontramos mas de 100 porciento, que es luego del 2003, se sugiere que las personas empezaron a suscribirse a más de una línea telefónica.
+# Primer insigth: donde encontramos mas de 100 porciento, luego del 2003, se sugiere que las personas empezaron a suscribirse a más de una línea telefónica al tiempo.
     
 phones %>% 
     arrange(desc(suscripciones))
@@ -137,15 +135,12 @@ Dim_pais<- phones%>%
     group_by(pais)%>%
     summarize(avg_pobl = mean(total_pop, na.rm = T)) %>%
     arrange(desc(avg_pobl))
-```
-
-    ## `summarise()` ungrouping output (override with `.groups` argument)
-
-``` r
-#veamos una comparacion de una grafica de lineas con las tendencias de todos los paises
 
 
-# organizado por el top 10 de paises segun su poblacion 
+# Veamos una comparación de una gráfica de líneas con las tendencias de todos los paises
+
+
+# organizado por el top 10 de países segun su población 
 
 phones %>%
     semi_join(Dim_pais %>% top_n(40, avg_pobl), by = "pais") %>%
@@ -161,8 +156,7 @@ phones %>%
 
 ![](HistoricalPhones_files/figure-gfm/unnamed-chunk-3-2.png)<!-- -->
 
-\#Uso de los telefonos de linea vs movil mostrado segun su promedio por
-continente.
+### Uso de los teléfonos de línea vs mobil mostrado según su promedio por continente.
 
 ``` r
 phones %>%
@@ -182,12 +176,12 @@ phones %>%
           title = "Cómo fue la transición de las lineas móviles y fijas en cada continente")
 ```
 
-    ## `summarise()` regrouping output by 'year', 'continent' (override with `.groups` argument)
+    ## `summarise()` has grouped output by 'year', 'continent'. You can override using the `.groups` argument.
 
 ![](HistoricalPhones_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 ``` r
-# como segundo insigth podemos observar que usualmente las suscripciones de linas telefonicas se mantienen a lo largo de los años.
+# como segundo insigth podemos observar que usualmente las suscripciones de lúnas telefónicas se mantienen a lo largo de los años.
 
 
 summarize_subscriptions <- . %>%
@@ -197,16 +191,14 @@ summarize_subscriptions <- . %>%
               q75 = quantile(suscripciones, .75))
 ```
 
-Usamos la librería del WDI: World Development Indicators(World Bank)
-para asosicar el fct\_relevel con la capacidad adquisitiva junto al
-codigo de aréa de cada país
+### Usamos la librería del WDI: World Development Indicators(World Bank) para asosicar el fct\_relevel con la capacidad adquisitiva junto al codigo de aréa de cada país.
 
 ``` r
 library(WDI)
 
 country_incomes <- WDI(start = 2005, end = 2005, extra = T) %>%
     as_tibble() %>%
-    #iso3c es el codigo de area
+    #iso3c es el codigo de área
     select(code = iso3c, income)%>%
     filter(!is.na(income))%>%
     mutate(income = fct_relevel(income,"Low income", "Lower middle income","Upper middle income"))
@@ -218,7 +210,7 @@ by_year_income <-phones %>%
     summarize_subscriptions()
 ```
 
-    ## `summarise()` regrouping output by 'year', 'income' (override with `.groups` argument)
+    ## `summarise()` has grouped output by 'year', 'income'. You can override using the `.groups` argument.
 
 ``` r
 by_year_income%>%
@@ -236,7 +228,7 @@ by_year_income%>%
 ![](HistoricalPhones_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 ``` r
-#tercer insigt: podemos observar como los países con mayor ingresos, adquirieron e incorporaron primero la telefonía movil a lo largo de los años.
+# Tercer insigt: podemos observar como los países con mayor ingresos, adquirieron e incorporaron primero la telefonía mobil a lo largo de los años.
 
 
 
@@ -246,10 +238,10 @@ by_year_income <- phones %>%
     summarize_subscriptions
 ```
 
-    ## `summarise()` regrouping output by 'year', 'income' (override with `.groups` argument)
+    ## `summarise()` has grouped output by 'year', 'income'. You can override using the `.groups` argument.
 
 ``` r
-# Unimos en una sola gráfica el detalle de las lineas por promedio de ingresos
+# Unimos en una sola gráfica el detalle de las líneas por promedio de ingresos.
 
 by_year_income %>%
     ggplot(aes(year,
