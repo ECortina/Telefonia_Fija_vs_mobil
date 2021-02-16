@@ -1,4 +1,4 @@
-Uso Histórico de los teléfonos moviles vs tradicionales
+Uso histórico de los teléfonos moviles vs tradicionales
 ================
 
 ## Análisis del uso de los teléfonos cable y mobil, a lo largo del tiempo.
